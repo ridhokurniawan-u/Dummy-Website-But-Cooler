@@ -5,24 +5,26 @@ import (
     "log"
     "net/http"
     "os"
-)
 
-// Default values, will be overridden by build flags
-var (
-    GREETING_MESSAGE = "Default Greeting"
-    PORT             = "8080"
+    "github.com/joho/godotenv"
 )
 
 func main() {
-    // Use environment variables if they exist, otherwise use compiled defaults
+    // Load environment variables from .env file
+    err := godotenv.Load()
+    if err != nil {
+        log.Fatalf("Error loading .env file: %v", err)
+    }
+
+    // Get variables from environment
     greeting := os.Getenv("GREETING_MESSAGE")
     if greeting == "" {
-        greeting = GREETING_MESSAGE
+        greeting = "Default Greeting"
     }
 
     port := os.Getenv("PORT")
     if port == "" {
-        port = PORT
+        port = "8080"
     }
 
     http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
