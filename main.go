@@ -10,13 +10,11 @@ import (
 )
 
 func main() {
-    // Load environment variables from .env file
     err := godotenv.Load()
     if err != nil {
         log.Fatalf("Error loading .env file: %v", err)
     }
 
-    // Get variables from environment
     greeting := os.Getenv("GREETING_MESSAGE")
     if greeting == "" {
         greeting = "Default Greeting"
